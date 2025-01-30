@@ -1,3 +1,52 @@
+# Overview
+
+This module is responsible for processing planner tasks by downloading an Excel file from SharePoint, validating planner names, and uploading relevant rows to a queue. The process is designed to work with UiPath's Orchestrator.
+
+# Process Flow
+
+1. ```Download the Excel file from SharePoint.```
+2. ```Validate planner names based on the content of the file.```
+3. ```Delete planners from SharePoint if they are no longer on the list.```
+4. ```Upload all valid planners to a queue named PlannerRefresh.```
+
+# Excel file 
+
+- ```MIDA```
+- ```LKME```
+
+They are responsible for updating the Excel file with new planners, ensuring that only relevant planner tasks are fetched. If the process fails, it's most likely due to the excel file being edited incorrectly. The planner names column corresponds with a filename, so make sure it doesn't have invalid characters like "/" and so on.
+
+# Dependencies
+
+- ```OpenOrchestrator.orchestrator_connection.connection```
+- ```OpenOrchestrator.database.queues```
+- ```office365.runtime.auth.user_credential```
+- ```office365.sharepoint.client_context```
+- ```pandas (pd)```
+
+# Functions
+
+- ```process(orchestrator_connection, queue_element)```
+  - Retrieves credentials and SharePoint site details.
+  - Downloads the PlannerListe.xlsx file.
+  - Identifies valid planner names.
+  - Deletes outdated planners from SharePoint.
+  - Uploads planner information to the PlannerRefresh queue.
+
+- ```sharepoint_client(username, password, sharepoint_site_url)```
+  - Authenticates and connects to SharePoint.
+
+- ```download_file_from_sharepoint(client, sharepoint_file_url)```
+  - Downloads a file from SharePoint and ensures it exists locally.
+
+# Notes
+
+- ```The Excel file is edited by Mikkel Dall and Mette Kvist Lund.```
+- ```If a planner is removed from the Excel list, it is also deleted from SharePoint.```
+- ```New planners added to the Excel list will automatically be queued for processing.```
+
+
+
 # Robot-Framework V3
 
 This repo is meant to be used as a template for robots made for [OpenOrchestrator](https://github.com/itk-dev-rpa/OpenOrchestrator).

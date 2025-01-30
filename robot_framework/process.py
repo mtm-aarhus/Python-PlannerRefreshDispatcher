@@ -46,7 +46,7 @@ def process(orchestrator_connection: OrchestratorConnection, queue_element: Queu
             print(f"Deleting: {file.name} (ID: {file.unique_id})")
             file.delete_object()
             client.execute_query()
-            
+            #Removing this line will
             planner_df = pd.read_excel("PlannerListe.xlsx", sheet_name="PlannerListe")
 
 
